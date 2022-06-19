@@ -52,3 +52,7 @@ img.large{
 .detail button{
   margin-left:10px;
 }
+
+input.memo_input{
+  margin-left:20px;
+}

@@ -7,6 +7,7 @@ import Board from "./board/Board";
 import Login from "./login/Login";
 import Member from "./member/Member";
 import errimg from "./image/er.png"
+import Memo from "./memo/Memo";
 
 const RouteMain=()=>{
 
@@ -24,6 +25,9 @@ const RouteMain=()=>{
                 <Route path="/shop/detail/:num" element={<ShopDetail/>}/>
                 <Route path="/shop/updateform/:num" element={<ShopUpdate/>}/>
                 
+                {/* Meomo */}
+                <Route path="/memo" element={<Memo/>}/>
+
                 <Route path="/board/list" element={<Board/>}/>
                 <Route path="/member/form" element={<Member/>}/>
                 <Route path="/login" element={<Login/>}/>

@@ -25,11 +25,13 @@ const ShopDetail=()=>{
     setOpen(false);
     };
 
+    //전역변수등록
+    const SPRING_URL=process.env.REACT_APP_SPRING_URL;
 
     //url등록
-    let detailUrl = "http://localhost:9001/shop/detail?num="+num;
-    let photoUrl="http://localhost:9001/save/";
-    let deletelUrl = "http://localhost:9001/shop/delete?num="+num;
+    let detailUrl = SPRING_URL+"shop/detail?num="+num;
+    let photoUrl= SPRING_URL+"save/";
+    let deletelUrl =  SPRING_URL+"shop/delete?num="+num;
 
 
     //스프링으로부터 num에 해당하는 data받기
