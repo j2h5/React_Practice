@@ -4,23 +4,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Member=()=>{
+
+    const navi = useNavigate();
     const [data,setData] = useState({
-        id:'', name:'', pass:'', email:'', hp:'', addr:''
+        id:'', name:'', pass:'', email:'', hp:'', addr:'', emailok:false
     });
     const [passOk,setPassOk] = useState(false);
     const [email1,setEmail1] = useState('');
     const [email2,setEmail2] = useState('');
     const [btnOk,setBtnOk] = useState(false);
+    const [emailok,setEmailOk] = useState(false);
 
     //submit 시 호출 될 함수
     const onSave = (e) => {
         e.preventDefault();//기본이벤트무효화
-
-        //이메일 합치기
-        setData({
-            ...data,
-            email:`${email1}@${email2}`
-        })
         //console.dir(data);
 
         if(!btnOk){
@@ -33,13 +30,16 @@ const Member=()=>{
             return;
         }
 
-        setTimeout(()=>{
-            const url=process.env.REACT_APP_SPRING_URL+"insert";
+        if(!data.emailok){
+            alert("이메일 중복 버튼을 눌러주세요")
+            return;
+        }
+
+        const url=process.env.REACT_APP_SPRING_URL+"member/insert";
             axios.post(url,data)
             .then(res=>{
-                alert("insert success!!")
-            });
-        },2000); //2초후 실행 ( 랜더링이 끝난 후 )
+                navi("/login")
+        })
     }
 
     // data 관련 데이터 입력 시 호출
@@ -129,6 +129,8 @@ const Member=()=>{
                                 <option value='naver.com'>네이버</option>
                                 <option value='gmail.com'>구글</option>
                             </select>
+                            <button type="button" onClick={()=>{ setData({ ...data, email:`${email1}@${email2}`,emailok:true  });  
+                        alert("이메일 중복 확인"); }}>확인</button>
                         </td>
                     </tr>
 
