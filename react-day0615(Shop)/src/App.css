@@ -56,3 +56,11 @@ img.large{
 input.memo_input{
   margin-left:20px;
 }
+
+div.member_form{
+  margin-left: 100px;
+}
+
+table.member_form th{
+  width: 100px;
+}
