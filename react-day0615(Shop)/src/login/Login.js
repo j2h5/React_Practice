@@ -1,11 +1,16 @@
 import React from "react";
 import '../App.css';
+import LoginForm from "./LoginForm";
+import Logout from "./Logout";
 
 const Login=()=>{
+    let loginok = localStorage.loginok;
 
     return (
         <div>
-            <h1>Login</h1>
+            {
+                loginok == null ? <LoginForm/> : <Logout/>
+            }
         </div>
     )
 }
