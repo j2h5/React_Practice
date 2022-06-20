@@ -21,7 +21,7 @@ const Member=()=>{
             ...data,
             email:`${email1}@${email2}`
         })
-        console.dir(data);
+        //console.dir(data);
 
         if(!btnOk){
             alert("아이디 중복체크를 해주세요");
@@ -32,6 +32,14 @@ const Member=()=>{
             alert("비밀번호 확인을 해주세요");
             return;
         }
+
+        setTimeout(()=>{
+            const url=process.env.REACT_APP_SPRING_URL+"insert";
+            axios.post(url,data)
+            .then(res=>{
+                alert("insert success!!")
+            });
+        },2000); //2초후 실행 ( 랜더링이 끝난 후 )
     }
 
     // data 관련 데이터 입력 시 호출
@@ -64,6 +72,20 @@ const Member=()=>{
             setPassOk(false);
     }
 
+    //아이디 중복체크
+    const onIdJungbok = () => {
+        const url = process.env.REACT_APP_SPRING_URL+"member/idcheck?id="+data.id;
+        axios.get(url)
+        .then(res=>{
+            if(res.data===0){
+                setBtnOk(true);
+                alert("가입 가능한 아이디입니다.");
+            }else{
+                setBtnOk(false);
+                alert("이미 가입되어있는아이디 입니다.");
+            }
+        })
+    }
     return (
         <div className="member_form">
             <form onSubmit={onSave}>
@@ -74,7 +96,7 @@ const Member=()=>{
                         <th>아이디</th>
                         <td>
                             <input type="text" style={{width:'100px'}} name="id" required onChange={onDataChange} defaultValue={data.id}/>
-                            <button type="button" style={{marginLeft:'5px'}}>중복체크</button>
+                            <button type="button" style={{marginLeft:'5px'}} onClick={onIdJungbok}>중복체크</button>
                         </td>
                     </tr>
 
