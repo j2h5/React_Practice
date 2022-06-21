@@ -7,7 +7,7 @@ const BoardList3=()=>{
 
     return(
         <div>
-
+            BoardList3
         </div>
     )
 }

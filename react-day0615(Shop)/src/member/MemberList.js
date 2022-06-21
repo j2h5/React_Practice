@@ -28,7 +28,7 @@ const MemberList=()=>{
     return(
         <div>
             <table className="table" style={{width:'600px'}}>
-               <caption><h3>회원 명단</h3></caption> 
+            <caption><h3>회원 명단</h3></caption> 
             <thead>
                 <tr style={{backgroundColor:'#ddd'}}>
                     <th width='50'>번호</th>
