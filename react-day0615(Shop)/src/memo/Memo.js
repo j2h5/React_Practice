@@ -1,71 +1,89 @@
-import React, {useState, useEffect} from "react";
+import React,{useEffect, useState} from "react";
 import '../App.css';
 import axios from "axios";
-import MemoRowItem from "./MemoRowItem";
+import { useNavigate } from "react-router-dom";
+import RowMemoItem from "./RowMemoItem";
 
 
-const Memo = () => {
-    const [nickname, setNickname] = useState('');
-    const [message, setMessage] = useState('');
+const Memo=()=>{
+    //.env 전역변수 사용 
+    const SPRING_URL=process.env.REACT_APP_SPRING_URL;
 
-    const [memoList, setMemoList] = useState([]);
+    //백엔드에서 받아올 리스트 데이터 변수 
+    const [memolist,setMemolist]=useState([]);
 
-    let memoUrl = "http://localhost:9001/memo/insert";
+    //보내는 변수
+    const [nickname,setNickname]=useState('');
+    const [message,setMessage]=useState('');
 
-    const onInsert = (e) => {
-        
-        axios.post(memoUrl, { nickname, message })
-        .then(res => {
-            setNickname('');
-            setMessage('');
-        })
-        .catch(err=>{
-            alert(err);
-        });
-    }
-
-    const list = () => {
-        let listurl = "http://localhost:9001/memo/list";
-
-        axios.get(listurl)
-        .then(res=>{
-            setMemoList(res.data);
-        })
-    }
+    //페이지 이동 함수 
+    const Navi=useNavigate();
+    let insertUrl=SPRING_URL+"memo/insert";
+    let url=SPRING_URL+"/memo/list";
     
-    useEffect( () => {
+    //데이터 가져오는 함수 
+    const list=()=>{
+
+        let url="http://localhost:9001/memo/list";
+        axios.get(url)
+        .then(res=>{
+            setMemolist(res.data);
+            console.log("len="+res.data.length);
+        })
+    }
+
+    //메세지 입력 
+    const onInsert=(e)=>{
+        if(e.key==='Enter')
+        {
+            axios.post(insertUrl,{nickname,message})
+            .then(res=>{
+                // window.location.replace("/memo");
+                window.location.reload(); //새로고침
+            })
+        }
+
+    }
+
+    //처음 랜더링시 한번 데이터 가져오기 
+    useEffect(()=>{
         list();
     },[]);
 
-    return (
+    return(
         <div>
-            <h1>memo</h1>
-            <input type="text" className="memo_input" style={{width:'80px'}} 
-            onChange={(e)=>{
-                setNickname(e.target.value);
-            }} placeholder="닉네임"/>
-            <input type="text" className="memo_input" style={{width:'500px'}} 
-            onChange={(e)=>{
-                setMessage(e.target.value);
-            }} placeholder="메모"/>
-            <button type="button" onClick={onInsert}> 엔터 </button>
-
-            <table>
-            <thead>
-            <tr>
-                <th width='50'>닉</th>
-                <th width='350'>메모</th>
-                <th>날짜</th>
-            </tr>
-            </thead>
-            <tbody>
+            <h2>Memo</h2>
+            <hr/>
+            <div className="m_table">
+                        <input type='text' style={{width:'200px',height:'50px',marginRight:'20px',textAlign:'center'}} placeholder="닉네임" 
+                        onChange={(e)=>{
+                            setNickname(e.target.value);
+                        }}></input>
+    
+                        <input type='text' style={{width:'400px',height:'50px',textAlign:'center'}} placeholder="메세지 입력후 엔터를 누르세요" onKeyUp={onInsert}
+                        onChange={(e)=>{
+                            setMessage(e.target.value);
+                        }}></input>
+                <br/>
+            <table className="m_result">
+                <tr>
+                    <td>
+                        <th style={{width:'200px'}}>닉네임</th>
+                    </td>
+                    <td>
+                        <th style={{width:'300px'}}>메세지</th>
+                    </td>
+                    <td>
+                        <th style={{width:'200px'}}>작성일</th>
+                    </td>
+                </tr>
                     {
-                        memoList.map((row,idx)=>(
-                            <MemoRowItem key={idx} idx={idx} row={row}/>
+                        memolist.map((row,idx)=>(
+                            <RowMemoItem key={idx} row={row} idx={idx}/>
                         ))
                     }
-                </tbody>
             </table>
+            </div>
         </div>
     )
 }
