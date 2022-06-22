@@ -12,8 +12,6 @@ const BoardList1 = () => {
     // 현재 페이지번호 읽어오기
     const {currentPage}=useParams();
 
-
-
     // url 선언
     let pagelistUrl=process.env.REACT_APP_SPRING_URL+"board/pagelist?currentPage="+currentPage;
     let photoUrl=process.env.REACT_APP_SPRING_URL+"save/";
