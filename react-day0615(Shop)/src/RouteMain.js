@@ -5,10 +5,12 @@ import {About, Main, Menu, Title, Info} from './components';
 import {Shop, ShopForm, ShopDetail, ShopUpdate } from './shop';
 import Board from "./board/Board";
 import BoardForm from "./board/BoardForm";
+import BoardDetail from "./board/BoardDetail";
 import Login from "./login/Login";
 import Member from "./member/Member";
 import errimg from "./image/er.png"
 import Memo from "./memo/Memo";
+import MemberList from "./member/Member";
 
 const RouteMain=()=>{
 
@@ -29,9 +31,14 @@ const RouteMain=()=>{
                 {/* Meomo */}
                 <Route path="/memo" element={<Memo/>}/>
 
-                <Route path="/board/list" element={<Board/>}/>
+                {/* Board */}
+                <Route path="/board/list/:currentPage" element={<Board/>}/>
                 <Route path="/board/form" element={<BoardForm/>}/>
+                <Route path="/board/detail/:num/:currentPage" element={<BoardDetail/>}/>
+
+
                 <Route path="/member/form" element={<Member/>}/>
+                <Route path="/member/list" element={<MemberList/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/about" element={<About/>}/>
 

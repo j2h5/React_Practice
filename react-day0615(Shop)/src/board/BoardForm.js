@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import '../App.css';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { DataArray } from "@mui/icons-material";
 
 const BoardForm=()=>{
     const [photo, setPhoto] = useState('');
@@ -46,7 +47,7 @@ const BoardForm=()=>{
 
         axios.post(insertUrl, { id, photo, subject, content})
         .then(res=>{
-            navi("/board/list");
+            navi("/board/list/1");
         })
     }
 
@@ -86,7 +87,7 @@ const BoardForm=()=>{
                         <td colSpan={2}>
                             <button type="submit">게시글저장</button>
                             <button type="button" onClick={()=>{
-                                navi("/board/list")
+                                navi("/board/list/1")
                             }}>게시판 메인</button>
                         </td> 
                     </tr>
