@@ -64,3 +64,10 @@ div.member_form{
 table.member_form th{
   width: 100px;
 }
+
+img.imgphoto{
+  position: absolute;
+  left:500px;
+  top:100px;
+  max-width: 250px;
+}
